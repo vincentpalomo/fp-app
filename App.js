@@ -116,6 +116,8 @@ export default function App() {
           longitudeDelta: 0.0421,
         }}
         showsUserLocation
+        mapType="hybrid"
+        mapPadding={0}
       >
         {currentLocation && (
           <Marker
@@ -191,7 +193,7 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     marginLeft: -5, // half of width to center
-    marginTop: 5, // half of height to center
+    marginTop: 20, // half of height to center
     backgroundColor: 'green', // or any color
     borderRadius: 5, // makes it a circle
     zIndex: 10, // ensures it overlays the map
