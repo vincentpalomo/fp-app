@@ -74,7 +74,7 @@ export default function App() {
     setFoodPlots([...foodPlots, newFoodPlot]);
   };
 
-  const pressHandler = async () => {
+  const setNewFoodPlotHandler = async () => {
     const centerCoordinate = await getCenterCoordinates();
     console.log({ centerCoordinate });
     if (centerCoordinate) {
@@ -82,7 +82,7 @@ export default function App() {
     }
   };
 
-  const pressHandler2 = () => {
+  const setCurrentGPSHandler = () => {
     if (currentLocation) {
       const newFoodPlot = {
         id: Date.now(),
@@ -97,6 +97,11 @@ export default function App() {
     } else {
       Alert.alert('Error', 'Unable to get current location');
     }
+  };
+
+  const clearFoodPlotsHandler = () => {
+    console.log('clearing food plots...');
+    setFoodPlots([]);
   };
 
   return (
@@ -150,8 +155,25 @@ export default function App() {
           alignItems: 'center',
         }}
       >
-        <Button title="Set New Food Plot" onPress={() => pressHandler()} />
-        <Button title="Set Current GPS" onPress={() => pressHandler2()} />
+        <Button title="Set New Food Plot" onPress={() => setNewFoodPlotHandler()} />
+        <Button title="Set Current GPS" onPress={() => setCurrentGPSHandler()} />
+      </View>
+
+      {/* floating clear button */}
+      <View
+        style={{
+          position: 'absolute',
+          top: 100,
+          right: 20,
+          gap: 10,
+        }}
+      >
+        <TouchableOpacity
+          style={{ backgroundColor: '#ff4444', padding: 15, borderRadius: 30 }}
+          onPress={() => clearFoodPlotsHandler()}
+        >
+          <Text>Clear Food Plots</Text>
+        </TouchableOpacity>
       </View>
       <Text style={{ margin: 20, textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>
         Food Plot App Alpha Test Build 0.0.1
