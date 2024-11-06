@@ -1,10 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Alert, TouchableOpacity, PanResponder, Button, StyleSheet } from 'react-native';
 import MapView, { Marker, Circle } from 'react-native-maps';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
 
+// Constants for radius
+const MILE_TO_METERS = 1609.34;
+const RADIUS_IN_MILES = 1;
+const RADIUS_IN_METERS = RADIUS_IN_MILES * MILE_TO_METERS;
+
 export default function App() {
+  const [foodPlots, setFoodPlots] = useState([]);
   const [mapRef, setMapRef] = useState(null);
   const [currentLocation, setCurrentLocation] = useState({
     latitude: 37.78825,
@@ -38,13 +44,9 @@ export default function App() {
     })();
   }, []);
 
-  console.log(currentLocation);
-
   // get coordinates of center of map
   const getCenterCoordinates = async () => {
-    console.log('line 45');
     if (mapRef) {
-      console.log('got in here');
       try {
         const camera = await mapRef.getCamera();
         console.log({ camera });
@@ -59,12 +61,24 @@ export default function App() {
     }
   };
 
+  // create food plot handler
+  const createFoodPlot = (coordinate) => {
+    const newFoodPlot = {
+      id: Date.now(),
+      coordinate: {
+        latitude: coordinate.latitude,
+        longitude: coordinate.longitude,
+      },
+      radius: RADIUS_IN_METERS,
+    };
+    setFoodPlots([...foodPlots, newFoodPlot]);
+  };
+
   const pressHandler = async () => {
-    console.log('clicked');
     const centerCoordinate = await getCenterCoordinates();
     console.log({ centerCoordinate });
     if (centerCoordinate) {
-      setCurrentLocation(centerCoordinate);
+      createFoodPlot(centerCoordinate);
     }
   };
 
@@ -93,6 +107,19 @@ export default function App() {
             pinColor="#ff3333"
           ></Marker>
         )}
+
+        {/* Existing food plot markers */}
+        {foodPlots.map((plot) => (
+          <React.Fragment key={plot.id}>
+            <Marker coordinate={plot.coordinate} />
+            <Circle
+              center={plot.coordinate}
+              radius={plot.radius}
+              strokeColor="rgba(0, 0, 255, 0.5)"
+              fillColor="rgba(0, 0, 255, 0.3)"
+            />
+          </React.Fragment>
+        ))}
       </MapView>
 
       {/* center dot */}
