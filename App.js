@@ -83,7 +83,20 @@ export default function App() {
   };
 
   const pressHandler2 = () => {
-    console.log('click 2');
+    if (currentLocation) {
+      const newFoodPlot = {
+        id: Date.now(),
+        coordinate: {
+          latitude: currentLocation.latitude,
+          longitude: currentLocation.longitude,
+        },
+        isCheckedIn: false,
+        radius: RADIUS_IN_METERS,
+      };
+      setFoodPlots([...foodPlots, newFoodPlot]);
+    } else {
+      Alert.alert('Error', 'Unable to get current location');
+    }
   };
 
   return (
@@ -129,14 +142,16 @@ export default function App() {
       <View
         style={{
           margin: 10,
+          padding: 5,
+          gap: 5,
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
-        <Button title="Click here" onPress={() => pressHandler()}>
-          Click here
-        </Button>
-        <Button title="Click here 2" onPress={() => pressHandler2()}>
-          Click here
-        </Button>
+        <Button title="Set New Food Plot" onPress={() => pressHandler()} />
+        <Button title="Set Current GPS" onPress={() => pressHandler2()} />
       </View>
       <Text style={{ margin: 20, textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>
         Food Plot App Alpha Test Build 0.0.1
