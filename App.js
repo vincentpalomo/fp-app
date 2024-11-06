@@ -6,7 +6,7 @@ import * as Location from 'expo-location';
 
 // Constants for radius
 const MILE_TO_METERS = 1609.34;
-const RADIUS_IN_MILES = 1;
+const RADIUS_IN_MILES = 0.1;
 const RADIUS_IN_METERS = RADIUS_IN_MILES * MILE_TO_METERS;
 
 export default function App() {
@@ -116,28 +116,18 @@ export default function App() {
           longitudeDelta: 0.0421,
         }}
         showsUserLocation
-        mapType="hybrid"
+        mapType='hybrid'
         mapPadding={0}
       >
         {currentLocation && (
-          <Marker
-            coordinate={currentLocation}
-            draggable
-            onDragEnd={(e) => setCurrentLocation(e.nativeEvent.coordinate)}
-            pinColor="#ff3333"
-          ></Marker>
+          <Marker coordinate={currentLocation} draggable onDragEnd={(e) => setCurrentLocation(e.nativeEvent.coordinate)} pinColor='#ff3333'></Marker>
         )}
 
         {/* Existing food plot markers */}
         {foodPlots.map((plot) => (
           <React.Fragment key={plot.id}>
             <Marker coordinate={plot.coordinate} />
-            <Circle
-              center={plot.coordinate}
-              radius={plot.radius}
-              strokeColor="rgba(0, 0, 255, 0.5)"
-              fillColor="rgba(0, 0, 255, 0.3)"
-            />
+            <Circle center={plot.coordinate} radius={plot.radius} strokeColor='rgba(33, 150, 243, 0.3)' fillColor='rgba(33, 150, 243, 0.1)' />
           </React.Fragment>
         ))}
       </MapView>
@@ -157,8 +147,8 @@ export default function App() {
           alignItems: 'center',
         }}
       >
-        <Button title="Set New Food Plot" onPress={() => setNewFoodPlotHandler()} />
-        <Button title="Set Current GPS" onPress={() => setCurrentGPSHandler()} />
+        <Button title='Set New Food Plot' onPress={() => setNewFoodPlotHandler()} />
+        <Button title='Set Current GPS' onPress={() => setCurrentGPSHandler()} />
       </View>
 
       {/* floating clear button */}
@@ -170,17 +160,12 @@ export default function App() {
           gap: 10,
         }}
       >
-        <TouchableOpacity
-          style={{ backgroundColor: '#ff4444', padding: 15, borderRadius: 30 }}
-          onPress={() => clearFoodPlotsHandler()}
-        >
+        <TouchableOpacity style={{ backgroundColor: '#ff4444', padding: 15, borderRadius: 30 }} onPress={() => clearFoodPlotsHandler()}>
           <Text>Clear Food Plots</Text>
         </TouchableOpacity>
       </View>
-      <Text style={{ margin: 20, textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>
-        Food Plot App Alpha Test Build 0.0.1
-      </Text>
-      <StatusBar style="auto" />
+      <Text style={{ margin: 20, textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>Food Plot App Alpha Test Build 0.0.1</Text>
+      <StatusBar style='auto' />
     </View>
   );
 }
@@ -194,7 +179,7 @@ const styles = StyleSheet.create({
     height: 10,
     marginLeft: -5, // half of width to center
     marginTop: 20, // half of height to center
-    backgroundColor: 'green', // or any color
+    backgroundColor: 'black', // or any color
     borderRadius: 5, // makes it a circle
     zIndex: 10, // ensures it overlays the map
   },
