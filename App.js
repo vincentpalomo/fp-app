@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, Alert, TouchableOpacity, PanResponder, Button } from 'react-native';
+import { Text, View, Alert, TouchableOpacity, PanResponder, Button, StyleSheet } from 'react-native';
 import MapView, { Marker, Circle } from 'react-native-maps';
 import { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
@@ -95,6 +95,9 @@ export default function App() {
         )}
       </MapView>
 
+      {/* center dot */}
+      <View style={styles.centerDot} />
+
       {/* button container */}
       <View
         style={{
@@ -115,3 +118,18 @@ export default function App() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  centerDot: {
+    position: 'absolute',
+    top: '40%',
+    left: '50%',
+    width: 10,
+    height: 10,
+    marginLeft: -5, // half of width to center
+    marginTop: 5, // half of height to center
+    backgroundColor: 'green', // or any color
+    borderRadius: 5, // makes it a circle
+    zIndex: 10, // ensures it overlays the map
+  },
+});
