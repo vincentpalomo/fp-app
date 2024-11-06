@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Alert, TouchableOpacity, PanResponder, Button } from 'react-native';
 import MapView, { Marker, Circle } from 'react-native-maps';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
 
 export default function App() {
+  const [mapRef, setMapRef] = useState(null);
   const [currentLocation, setCurrentLocation] = useState({
     latitude: 37.78825,
     longitude: -122.4324,
@@ -39,8 +40,32 @@ export default function App() {
 
   console.log(currentLocation);
 
-  const pressHandler = () => {
+  // get coordinates of center of map
+  const getCenterCoordinates = async () => {
+    console.log('line 45');
+    if (mapRef) {
+      console.log('got in here');
+      try {
+        const camera = await mapRef.getCamera();
+        console.log({ camera });
+        return {
+          latitude: camera.center.latitude,
+          longitude: camera.center.longitude,
+        };
+      } catch (error) {
+        console.error('Error getting map center', error);
+        return null;
+      }
+    }
+  };
+
+  const pressHandler = async () => {
     console.log('clicked');
+    const centerCoordinate = await getCenterCoordinates();
+    console.log({ centerCoordinate });
+    if (centerCoordinate) {
+      setCurrentLocation(centerCoordinate);
+    }
   };
 
   const pressHandler2 = () => {
@@ -50,6 +75,7 @@ export default function App() {
   return (
     <View style={{ flex: 1 }}>
       <MapView
+        ref={(ref) => setMapRef(ref)}
         style={{ flex: 1 }}
         initialRegion={{
           latitude: 30.471165,
@@ -59,14 +85,14 @@ export default function App() {
         }}
         showsUserLocation
       >
-        {/* {currentLocation && (
+        {currentLocation && (
           <Marker
-            coordinate={{ latitude: currentLocation.latitude, longitude: currentLocation.latitude }}
+            coordinate={currentLocation}
             draggable
             onDragEnd={(e) => setCurrentLocation(e.nativeEvent.coordinate)}
             pinColor="#ff3333"
           ></Marker>
-        )} */}
+        )}
       </MapView>
 
       {/* button container */}
