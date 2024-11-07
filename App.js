@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, Alert, TouchableOpacity, PanResponder, Button, StyleSheet } from 'react-native';
-import MapView, { Marker, Circle } from 'react-native-maps';
+import { Text, View, Alert, TouchableOpacity, Button, StyleSheet, Image } from 'react-native';
+import MapView, { Marker, Circle, PROVIDER_GOOGLE } from 'react-native-maps';
 import React, { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
 
