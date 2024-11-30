@@ -12,18 +12,20 @@ const PADDING = 8;
 const CustomMarker = ({ marker, onPress, onDragEnd }) => {
   if (!marker || !marker.coordinate) return null;
 
-  const markerType = MARKER_TYPES[marker.type.toUpperCase()];
   const markerColor = marker.isPresent ? '#27ae60' : '#e74c3c';
+  const markerType = MARKER_TYPES[marker.type.toUpperCase()];
 
   return (
     <Marker
+      key={`${marker.id}-${marker.isPresent}`}
       coordinate={marker.coordinate}
       onPress={onPress}
       anchor={{ x: 0.5, y: 1.0 }}
       draggable={true}
       onDragEnd={(e) => onDragEnd(marker.id, e.nativeEvent.coordinate)}
+      pinColor={markerColor}
     >
-      <View style={styles.markerContainer}>
+      {/* <View style={styles.markerContainer}>
         <View style={styles.markerWrapper}>
           <MapPinSvg 
             color={markerColor} 
@@ -34,10 +36,11 @@ const CustomMarker = ({ marker, onPress, onDragEnd }) => {
             <Text style={styles.emojiText}>{markerType?.icon}</Text>
           </View>
         </View>
-      </View>
+      </View> */}
     </Marker>
   );
 };
+
 
 const styles = StyleSheet.create({
   markerContainer: {
