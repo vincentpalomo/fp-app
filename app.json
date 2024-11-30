@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "unnamed-hunting-app.0.0.1",
+    "slug": "unnamed-hunting-app.0.0.1",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyDf5ImvXggtOlfmx1lI8-7fIJGqG5ymesk"
+      },
+      "bundleIdentifier": "com.anonymous.unnamedhuntingapp.x0.x0.x1"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "googleMaps": {
+        "apiKey": "AIzaSyDf5ImvXggtOlfmx1lI8-7fIJGqG5ymesk"
+      },
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ],
+      "package": "com.anonymous.unnamedhuntingapp.x0.x0.x1"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
+      ]
+    ]
+  }
+}
